@@ -3,9 +3,8 @@ header('Content-Type: application/json');
 
 // CONTROLE DE TAMANHO DA REQUISIÇÃO
 if ($_SERVER['CONTENT_LENGTH'] > $postMaxSize) { // 10 MB em bytes
-    echo "Os dados enviados são maiores que 10 MB.";
-} else {
-    echo "Os dados enviados estão dentro do limite permitido.";
+    http_response_code(400);
+    die(json_encode(['error' => 'Dados ultrapassam o limite de 10MB']));
 }
 
 require_once __DIR__ . '/env.php';
