@@ -1,6 +1,6 @@
 <?php
 function handlePost($request) {
-    $id = $request ?? uniqid();
+    $id = $request ? $request : uniqid();
     $jsonAppend = isset($_POST['jsonAppend']) && $_POST['jsonAppend'] == 'true';
     
     $filePath = UPLOAD_DIR . $id;

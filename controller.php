@@ -31,14 +31,17 @@ function checkApiKey() {
     $headers = getallheaders();
     if (isset($headers['x-secret'])) {
         $apiKey = $headers['x-secret'];
-        // Verifique a chave de API (aqui está um exemplo simples)
-        $validApiKey = $apiSecret;
-        if ($apiKey === $validApiKey) {
-            return true;
-        } else {
-            http_response_code(403);
-            die(json_encode(['error' => 'Acesso negado. Chave de API inválida.']));
-        }
+    } else if (isset($_SERVER['HTTP_X_SECRET'])) {
+        $apiKey = $_SERVER['HTTP_X_SECRET'];
+    }else{
+        http_response_code(403);
+        die(json_encode(['error' => 'Acesso negado. Chave de API inválida.']));
+    }
+
+    // Verifique a chave de API (aqui está um exemplo simples)
+    $validApiKey = $apiSecret;
+    if ($apiKey === $validApiKey) {
+        return true;
     } else {
         http_response_code(403);
         die(json_encode(['error' => 'Acesso negado. Chave de API inválida.']));
